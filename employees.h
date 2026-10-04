@@ -15,7 +15,8 @@ struct Employee
 void addEmployee();
 void displayEmployees();
 void searchEmployees();
+void employeeMenu();
 
-double calculateSalary(double basicSalary, double housingAloowance, double transportAllowance);
-
+double calculateSalary(double basicSalary, double housingAllowance, double transportAllowance);
+int getValidPositiveInteger(const char prompt[]);
 #endif

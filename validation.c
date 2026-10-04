@@ -62,3 +62,29 @@ double getValidPositiveNumber(const char prompt[])
         return value;
     }
 }
+int getValidPositiveInteger(const char prompt[])
+{
+    int value;
+
+    while (1)
+    {
+        printf("%s", prompt);
+
+        if (scanf("%d", &value) != 1)
+        {
+            printf("Invalid input. Please enter a numerical value.\n");
+            clearInputBuffer();
+            continue;
+        }
+
+        clearInputBuffer();
+
+        if (value < 0)
+        {
+            printf("Invalid value. Negative values are not allowed.\n");
+            continue;
+        }
+
+        return value;
+    }
+}

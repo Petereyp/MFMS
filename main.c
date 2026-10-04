@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "validation.h"
+#include "supplier.h"
+#include "employees.h"
+#include "budget.h"
 
 void displayMainMenu(void);
 
@@ -16,15 +19,15 @@ int main(void)
         switch (choice)
         {
             case 1:
-                printf("\nEmployee Management selected.\n");
+                employeeMenu();
                 break;
 
             case 2:
-                printf("\nBudget Management selected.\n");
+                budgetMenu();
                 break;
 
             case 3:
-                printf("\nSupplier Management selected.\n");
+                supplierMenu();
                 break;
 
             case 4:

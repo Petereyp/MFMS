@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include "employees.h"
+#include "validation.h"
 
 struct Employee employees[100];
 
@@ -9,58 +10,43 @@ void addEmployee()
 {
     printf("\n--Add Employee--\n");
 
-    printf("Enter Employee ID: ");
-    scanf("%d", &employees[employeeCount].employeeID);
+   employees[employeeCount].employeeID = 
+       getValidPositiveInteger("Enter Employee ID: ");
     
-    getchar();
+ do {
+    printf("Enter Employee Name: ");
+        fgets(employees[employeeCount].name, sizeof(employees[employeeCount].name), stdin);
 
-    printf("Enter Employee Name");
-    fgets(employees[employeeCount].name,sizeof(employees[employeeCount].name),stdin);
+        employees[employeeCount].name[strcspn(employees[employeeCount].name, "\n")] = '\0';
 
-    employees[employeeCount].name[strcspn(employees[employeeCount].name, "\n")] = '0\n';
+        if (strlen(employees[employeeCount].name) == 0)
+        {
+            printf("Invalid input. Name cannot be empty. Please try again.\n");
+        }
+    } while (strlen(employees[employeeCount].name) == 0);
 
+ do 
+  {
+        printf("Enter Employee Department: ");
+        fgets(employees[employeeCount].department, sizeof(employees[employeeCount].department), stdin);
 
-    printf("Enter Department: ");
-    fgets(employees[employeeCount].department,sizeof(employees[employeeCount].department),stdin);
+        employees[employeeCount].department[strcspn(employees[employeeCount].department, "\n")] = '\0';
 
-    employees[employeeCount].department[strcspn(employees[employeeCount].department, "\n")] = '0\n';
-
-    do
-    {
+        if (strlen(employees[employeeCount].department) == 0)
+        {
+            printf("Invalid input. Department cannot be empty. Please try again.\n");
+        }
+    } while (strlen(employees[employeeCount].department) == 0);
     
-        printf("Enter Basic Salary: ");
-        scanf("%f", &employees[employeeCount].basicSalary);
 
-    if (employees[employeeCount].basicSalary < 0)
-    {
-        printf("Salary cannot be negative. Try again. \n");
-    }
+   employees[employeeCount].basicSalary = 
+       getValidPositiveNumber("Enter Basic Salary: ");
 
-    } while (employees[employeeCount].basicSalary < 0);
+   employees[employeeCount].housingAllowance = 
+       getValidPositiveNumber("Enter Housing Allowance: ");
 
-    do
-    {
-        printf("Enter Housing Allowance: ");
-        scanf("%lf", &employees[employeeCount].housingAllowance);
-
-        if (employees[employeeCount].housingAllowance < 0)
-        {
-            printf("Housing alllowance cannot be negative. Try again.\n");
-
-        }
-    } while (employees[employeeCount].housingAllowance < 0);
-
-    do
-    {
-        printf("Enter Transport Allowance: ");
-        scanf("%lf", &employees[employeeCount].transportAllowance);
-
-        if (employees[employeeCount].transportAllowance < 0)
-        {
-            printf("Transport allowance cannot be negative. Try again.\n");
-
-        }
-    } while (employees[employeeCount].transportAllowance < 0);
+    employees[employeeCount].transportAllowance = 
+       getValidPositiveNumber("Enter Transport Allowance: ");
 
     employeeCount++;
 
@@ -70,7 +56,7 @@ void addEmployee()
 
 } 
 
-void dislpayEmployees()
+void displayEmployees()
 {
     if (employeeCount == 0)
     {
@@ -95,7 +81,7 @@ void dislpayEmployees()
 
 
 }
-void searchEmployee()
+void searchEmployees()
 {
     char searchName[50];
     int found = 0;
@@ -138,4 +124,39 @@ double calculateSalary(double basicSalary, double housingAllowance, double trans
 
     return grossSalary;
 
+}
+void employeeMenu()
+{
+    int choice;
+
+    do
+    {
+        printf("\n--- Employee Management Menu ---\n");
+        printf("1. Add Employee\n");
+        printf("2. Display Employees\n");
+        printf("3. Search Employee\n");
+        printf("4. Back to Main Menu\n");
+
+        choice = getValidMenuChoice(1, 4);
+
+        switch (choice)
+        {
+            case 1:
+                addEmployee();
+                break;
+
+            case 2:
+                displayEmployees();
+                break;
+
+            case 3:
+                searchEmployees();
+                break;
+
+            case 4:
+                printf("\nReturning to Main Menu...\n");
+                break;
+        }
+
+    } while (choice != 4);
 }
